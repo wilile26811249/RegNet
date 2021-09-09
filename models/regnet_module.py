@@ -98,7 +98,7 @@ class Stage(nn.Module):
         # except for the first block which use stride-two conv.
         self.blocks.add_module("block_0", XBlock(in_channels, out_channels, stride, bottleneck_ratio, group_width, se_ratio))
         for index in range(1, num_blocks):
-            self.blocks.add_module(f"block_{index}", XBlock(out_channels, out_channels, 1, bottleneck_ratio, group_width, se_ratio))
+            self.blocks.add_module(f"block_{index + 1}", XBlock(out_channels, out_channels, 1, bottleneck_ratio, group_width, se_ratio))
 
     def forward(self, x):
         x = self.blocks(x)

@@ -23,7 +23,7 @@ class AnyNetX(nn.Module):
         self.body = nn.Sequential()
         for index, (block_width, num_block, bottleneck_ratio, group_width) in enumerate(zip(block_widths, num_blocks, bottleneck_ratios, group_widths)):
             stage = Stage(prev_conv_width, block_width, num_block, stride, bottleneck_ratio, group_width, se_ratio)
-            self.body.add_module(f"Stage_{index}", stage)
+            self.body.add_module(f"Stage_{index + 1}", stage)
             prev_conv_width = block_width
         # Construct the head
         self.head = Head(prev_conv_width, num_classes)
