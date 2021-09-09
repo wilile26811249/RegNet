@@ -36,24 +36,36 @@ class AnyNetX(nn.Module):
 
 
 class AnyNetXb(AnyNetX):
+    """
+    AnyNetXb is a variant of AnyNetX that uses the same bottleneck ratio for all.
+    """
     def __init__(self, num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes):
         super(AnyNetXb, self).__init__(num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes)
         assert len(set(bottleneck_ratios)) == 1, "All bottleneck ratios must be equal"
 
 
 class AnyNetXc(AnyNetXb):
+    """
+    AnyNetXc is a variant of AnyNetXb that uses the same group width for all.
+    """
     def __init__(self, num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes):
         super(AnyNetXc, self).__init__(num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes)
         assert len(set(group_widths)) == 1, "All group widths must be equal"
 
 
 class AnyNetXd(AnyNetXc):
+    """
+    AnyNetXd is a variant of AnyNetXc that block widths are monotonically increasing.
+    """
     def __init__(self, num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes):
         super(AnyNetXd, self).__init__(num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes)
         assert all(prev <= behind for prev, behind in zip(block_widths, block_widths[1:])), "Block widths must be monotonically increasing"
 
 
 class AnyNetXe(AnyNetXd):
+    """
+    AnyNetXe is a variant of AnyNetXd that number of blocks is monotonically increasing.
+    """
     def __init__(self, num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes):
         super(AnyNetXe, self).__init__(num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes)
         assert all(prev <= behind for prev, behind in zip(num_blocks[: -2], num_blocks[1:-1])), "Number of blocks must be monotonically increasing"
