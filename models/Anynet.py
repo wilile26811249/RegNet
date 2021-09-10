@@ -13,7 +13,7 @@ class AnyNetX(nn.Module):
     """
     def __init__(self, num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes):
         super(AnyNetX, self).__init__()
-        prev_conv_width = 32
+        prev_conv_width = block_widths[0]
         # Check the input parameters are valid
         for block_width, bottleneck_ratio, group_width in zip(block_widths, bottleneck_ratios, group_widths):
             assert block_width % (bottleneck_ratio * group_width) == 0

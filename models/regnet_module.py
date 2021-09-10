@@ -49,11 +49,12 @@ class XBlock(nn.Module):
         )
 
         if se_ratio is not None:
+            se_channels = int(inner_channels // se_ratio)
             self.se = nn.Sequential(
                 nn.AdaptiveAvgPool2d(1),
-                nn.Conv2d(inner_channels, inner_channels // se_ratio, kernel_size = 1),
+                nn.Conv2d(inner_channels, se_channels, kernel_size = 1),
                 nn.ReLU(inplace = True),
-                nn.Conv2d(inner_channels // se_ratio, inner_channels, kernel_size = 1),
+                nn.Conv2d(se_channels, inner_channels, kernel_size = 1),
                 nn.Sigmoid()
             )
         else:
