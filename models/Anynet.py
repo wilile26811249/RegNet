@@ -59,7 +59,7 @@ class AnyNetXd(AnyNetXc):
     """
     def __init__(self, num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes):
         super(AnyNetXd, self).__init__(num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes)
-        assert all(prev <= behind for prev, behind in zip(block_widths, block_widths[1:])), "Block widths must be monotonically increasing"
+        assert all(prev <= behind for prev, behind in zip(block_widths[: -2], block_widths[1 :])), "Block widths must be monotonically increasing"
 
 
 class AnyNetXe(AnyNetXd):
@@ -68,7 +68,7 @@ class AnyNetXe(AnyNetXd):
     """
     def __init__(self, num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes):
         super(AnyNetXe, self).__init__(num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes)
-        assert all(prev <= behind for prev, behind in zip(num_blocks[: -2], num_blocks[1:-1])), "Number of blocks must be monotonically increasing"
+        assert all(prev <= behind for prev, behind in zip(num_blocks[: -2], num_blocks[1 :])), "Number of blocks must be monotonically increasing"
 
 
 if __name__ == '__main__':
@@ -76,7 +76,7 @@ if __name__ == '__main__':
     block_widths = [32, 64, 160, 384]
     bottleneck_ratios = [1, 1, 1, 1]
     group_widths = [2, 2, 2, 2]
-    model = AnyNetXe(num_blocks, block_widths, bottleneck_ratios,
+    model = AnyNetXd(num_blocks, block_widths, bottleneck_ratios,
         group_widths, stride = 1, se_ratio = 4, num_classes = 10)
     print(model)
     img = torch.randn(1, 3, 224, 224)
