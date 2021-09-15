@@ -1,2 +1,1 @@
-from regnet_module import *
-from Anynet import *
+from .Regnet import *

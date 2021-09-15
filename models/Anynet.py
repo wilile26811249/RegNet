@@ -1,4 +1,4 @@
-from regnet_module import Stem, Stage, Head
+from .regnet_module import Stem, Stage, Head
 
 import torch
 import torch.nn as nn

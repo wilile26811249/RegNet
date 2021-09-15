@@ -1,4 +1,4 @@
-from Anynet import AnyNetXe
+from .Anynet import AnyNetXe
 
 import numpy as np
 import torch
@@ -69,7 +69,8 @@ class RegNet(AnyNetXe):
         super(RegNet, self).__init__(num_blocks, block_widths, bottleneck_ratios, group_widths, stride, se_ratio, num_classes)
 
 
-def _create_regnet(model_cfg, stride = 1, num_classes = 1000):
+def create_regnet(model_arch = "regnetx_002", stride = 1, num_classes = 1000):
+    model_cfg = model_cfgs[model_arch]
     num_blocks, block_widths, group_widths, bottleneck_ratios = generate_regenet_arch(
         initial_width = model_cfg['w0'],
         width_slope = model_cfg['wa'],
@@ -84,8 +85,7 @@ def _create_regnet(model_cfg, stride = 1, num_classes = 1000):
 
 
 if __name__ == '__main__':
-    model_cfg = model_cfgs['regnety_320']
-    model = _create_regnet(model_cfg, 1, 1000)
+    model = create_regnet('regnetx_002', 1, 1000)
     img = torch.randn(1, 3, 224, 224)
     assert model(img).shape == (1, 1000)
     print("RegNet test success!")
