@@ -29,6 +29,27 @@ block with group convolution</b></figcaption>
 
 ---
 
+## Usage
+### Training
+```bash=
+python main.py
+```
+
+```bash=
+optional arguments:
+  -h, --help            show this help message and exit
+  --gpu_device GPU_DEVICE
+                        Select specific GPU to run the model
+  --batch-size N        Input batch size for training (default: 64)
+  --epochs N            Number of epochs to train (default: 20)
+  --num-class N         Number of classes to classify (default: 10)
+  --lr LR               Learning rate (default: 0.01)
+  --weight-decay WD     Weight decay (default: 1e-5)
+  --model-path PATH     Path to save the model
+```
+
+---
+
 ## Citation :
 ```
 @InProceedings{Radosavovic2020,
