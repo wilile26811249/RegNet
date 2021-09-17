@@ -12,7 +12,7 @@ from torchvision import transforms as T
 import torchvision.datasets as datasets
 
 
-def save_checkpoint(state, is_best, filename='checkpoint.pth.tar'):
+def save_checkpoint(state, is_best, filename = 'checkpoint.pth.tar'):
     torch.save(state, filename)
     if is_best:
         shutil.copyfile(filename, 'model_best.pth.tar')
@@ -196,7 +196,5 @@ if __name__ == "__main__":
             val_loader, criterion, optimizer, scheduler, device
         )
         print(f"Epoch {epoch} ->  Acc@1: {acc1}, Acc@5: {acc5}")
-        # Save model
-        torch.save(net.state_dict(), args.model_path)
 
     print("Training is done")
