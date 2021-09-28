@@ -85,7 +85,9 @@ def create_regnet(model_arch = "regnetx_002", stride = 1, num_classes = 1000):
 
 
 if __name__ == '__main__':
-    model = create_regnet('regnetx_002', 1, 1000)
+    model = create_regnet('regnety_040', 2, 1000)
     img = torch.randn(1, 3, 224, 224)
     assert model(img).shape == (1, 1000)
+    total_params = sum(p.numel() for p in model.parameters())
+    print(f"Total parameters: {total_params}")
     print("RegNet test success!")

@@ -5,6 +5,7 @@ import shutil
 import wandb
 from tqdm import tqdm
 from models import create_regnet
+from models.Regnet import *
 
 import torch
 import torch.nn as nn
@@ -112,24 +113,22 @@ def train_epoch(epoch, net, train_loader, val_loader , criterion, optimizer, sch
 if __name__ == "__main__":
     best_acc1 = 0.0
     parser = argparse.ArgumentParser(description = "Train classification of CMT model")
-    parser.add_argument('--data', metavar = 'DIR', default = './data',
+    parser.add_argument('--data', metavar = 'DIR', default = '../imagenet_data',
                 help = 'path to dataset')
-    parser.add_argument("--gpu_device", type = int, default = 0,
+    parser.add_argument("--gpu_device", type = int, default = 2,
                 help = "Select specific GPU to run the model")
     parser.add_argument('--batch-size', type = int, default = 64, metavar = 'N',
                 help = 'Input batch size for training (default: 64)')
-    parser.add_argument('--epochs', type = int, default = 50, metavar = 'N',
-                help = 'Number of epochs to train (default: 50)')
-    parser.add_argument('--num-class', type = int, default = 10, metavar = 'N',
+    parser.add_argument('--epochs', type = int, default = 90, metavar = 'N',
+                help = 'Number of epochs to train (default: 90)')
+    parser.add_argument('--num-class', type = int, default = 1000, metavar = 'N',
                 help = 'Number of classes to classify (default: 10)')
-    parser.add_argument('--lr', type = float, default = 6e-5, metavar='LR',
+    parser.add_argument('--lr', type = float, default = 0.1, metavar='LR',
                 help = 'Learning rate (default: 6e-5)')
     parser.add_argument('--weight-decay', type = float, default = 1e-5, metavar = 'WD',
                 help = 'Weight decay (default: 1e-5)')
     parser.add_argument('-p', '--print-freq', default = 10, type = int,
                         metavar='N', help='print frequency (default: 10)')
-    parser.add_argument('--model-path', type = str, default = 'weights/model.pth', metavar = 'PATH',
-                help = 'Path to save the model')
     args = parser.parse_args()
 
     # Create folder to save model
@@ -138,7 +137,8 @@ if __name__ == "__main__":
         os.makedirs(WEIGHTS_PATH)
 
     # Set device
-    os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu_device)
+    # os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu_device)
+    os.environ["CUDA_VISIBLE_DEVICES"] = '1,4'
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Data loading
@@ -173,13 +173,13 @@ if __name__ == "__main__":
     )
 
     # Create model
-    net = create_regnet(model_arch = "regnetx_002", stride = 1, num_classes = args.num_class)
-    net.to(device)
+    net = create_regnet(model_arch = "regnety_040", stride = 2, num_classes = args.num_class)
+    # net.to(device)
+    net = torch.nn.DataParallel(net).to(device)
 
     # Set loss function and optimizer
     # criterion = nn.CrossEntropyLoss()
-    criterion = nn.CrossEntropyLoss().cuda(args.gpu_device)
-
+    criterion = nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.SGD(net.parameters(), args.lr,
                                 momentum = 0.9,
                                 weight_decay = args.weight_decay)

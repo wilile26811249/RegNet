@@ -192,31 +192,3 @@ def get_dataloader(
         sampler = None
     )
     return train_loader, val_loader, test_loader
-
-train_transform = T.Compose([
-    T.RandomCrop(32, padding = 4),
-    T.RandomHorizontalFlip(),
-    T.RandomRotation(10),
-    T.Resize(224),
-    T.ToTensor(),
-    T.Normalize(mean = [0.491, 0.482, 0.447], std = [0.247, 0.243, 0.262])
-])
-
-test_transform = T.Compose([
-    T.Resize(224),
-    T.ToTensor(),
-    T.Normalize(mean = [0.491, 0.482, 0.447], std = [0.247, 0.243, 0.262])
-])
-
-kwargs = {
-    'batch_size': 64,
-    'num_workers': 1,
-}
-
-train_loader, val_loader, test_loader = get_dataloader(
-    train_transform,
-    train_transform,
-    img_size = 224,
-    split = (0.8, 0.2),
-    **kwargs
-)

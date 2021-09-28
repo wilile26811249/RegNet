@@ -7,7 +7,7 @@ class Stem(nn.Module):
         super(Stem, self).__init__()
         self.conv1 = nn.Conv2d(3, out_channels, 3, stride = 2, padding = 1, bias = False)
         self.bn = nn.BatchNorm2d(out_channels)
-        self.relu = nn.ReLU(inplace = True)
+        self.relu = nn.ReLU()
 
     def forward(self, x):
         x = self.conv1(x)
@@ -49,7 +49,7 @@ class XBlock(nn.Module):
         )
 
         if se_ratio is not None:
-            se_channels = int(inner_channels // se_ratio)
+            se_channels = int(inner_channels * se_ratio)
             self.se = nn.Sequential(
                 nn.AdaptiveAvgPool2d(1),
                 nn.Conv2d(inner_channels, se_channels, kernel_size = 1),
