@@ -31,9 +31,16 @@ block with group convolution</b></figcaption>
 
 ## Usage
 ### Training
+- Single node with one GPU
 ```bash=
 python main.py
 ```
+
+- Single node with multi GPU
+```bash=
+CUDA_VISIBLE_DEVICES=3,4 python -m torch.distributed.launch --nproc_per_node=2 --master_port=6666 main_ddp.py
+```
+
 
 ```bash=
 optional arguments:
@@ -47,6 +54,7 @@ optional arguments:
   --weight-decay WD     Weight decay (default: 1e-5)
   --model-path PATH     Path to save the model
 ```
+
 
 ---
 
