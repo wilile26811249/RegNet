@@ -3,6 +3,16 @@
 Unofficial PyTorch implementation of RegNet based on paper [Designing Network Design Spaces](https://arxiv.org/abs/2003.13678).
 
 ---
+
+## Table of Contents
+* [Model Architecture](#model-architecture)
+* [RegNetX and RegNetY models](#regnetx-and-regnety-models)
+* [Usage](#usage)
+* [Experiments Results (ImageNet-1K)](#experiments-results-imagenet-1k)
+* [Citation](#citation)
+
+
+---
 ## Model Architecture
 <figure>
 <img src="resources/model_gen_arch.png" alt="Trulli" style="width:100%">
@@ -72,7 +82,7 @@ optional arguments:
 
 ---
 
-## Citation :
+## Citation
 ```
 @InProceedings{Radosavovic2020,
   title = {Designing Network Design Spaces},
