@@ -76,9 +76,9 @@ optional arguments:
 ![Loss](./resources/loss_curve.png)
 
 
-|Model  |  Dataset | Learning Rate |   LR Scheduler | Optimizer |  Weight decay |   Acc@1  |  Acc@5  |
-|-------|:--------:|:------:|:----:|:--------:|:-------:|:--------:|:-------:|
-|REGNETY-400MF |  ImageNet-1k |  6e-5  | Cosine LR|  SGDM   |  1e-5   |  71.522%  |  90.146% |
+|Model  |  params(M) |   batch size | epochs | train(hr) |   Acc@1  |  Acc@5  |
+|-------|:------:|:----:|:--------:|:--------:|:-------:|:-------:|
+|REGNETY-400MF | 4.4  | 256 | 90 |  39   |  71.522%  |  90.146% |
 
 ---
 
